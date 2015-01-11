@@ -27,7 +27,15 @@ class ScoreYaCinderellaSDKExtension extends ConfigurableExtension
     protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.xml');
+
+        $servicesXml = 'services.xml';
+
+        $hasFactoryMethod = method_exists('Symfony\Component\DependencyInjection\Definition', 'setFactory');
+        if ($hasFactoryMethod === true) {
+            $servicesXml = 'services_26.xml';
+        }
+
+        $loader->load($servicesXml);
 
         $container
             ->getDefinition('score_ya.cinderella.sdk.client_service_builder')
@@ -40,11 +48,11 @@ class ScoreYaCinderellaSDKExtension extends ConfigurableExtension
 
             $factory = array(new Reference('score_ya.cinderella.sdk.client_service_builder'), 'get');
 
-            if (method_exists($definition, 'setFactory') === true) {
+            if ($hasFactoryMethod === true) {
                 $definition->setFactory($factory);
             }
 
-            if (method_exists($definition, 'setFactory') === false) {
+            if ($hasFactoryMethod === false) {
                 $definition
                     ->setFactoryService($factory[0])
                     ->setFactoryMethod($factory[1]);

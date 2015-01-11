@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+  <services>
+
+    <service id="score_ya.cinderella.sdk.client_service_builder" public="false"
+             class="ScoreYa\Cinderella\SDK\Common\ClientBuilder">
+      <factory class="ScoreYa\Cinderella\SDK\Common\ClientBuilder" method="build" />
+      <argument /> <!-- api key -->
+    </service>
+
+  </services>
+</container>
