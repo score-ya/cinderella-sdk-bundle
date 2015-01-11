@@ -43,7 +43,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param string $name
      *
-     * @return NodeDefinition|ArrayNodeDefinition
+     * @return ArrayNodeDefinition
      */
     private function addClientNode($name)
     {
