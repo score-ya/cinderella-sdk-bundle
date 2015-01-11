@@ -27,5 +27,5 @@ before_script:
 script: phpunit -v --coverage-clover=coverage.clover
 
 after_script:
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" && "$components" = "high" ]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi;'
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" && "$components" = "low" ]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi;'
+  - sh -c 'if [ "$components" = "high" ]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi;'
+  - sh -c 'if [ "$components" = "low" ]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi;'
