@@ -1,0 +1,35 @@
+{
+    "name": "scoreya/cinderella-sdk-bundle",
+    "description" : "Symfony CinderellaSDKBundle",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "keywords": ["sdk", "cinderella"],
+    "authors": [
+        {
+            "name": "Alexander Miehe",
+            "email": "thelex@beamscore.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "ScoreYa\\Cinderella\\Bundle\\SDKBundle\\": "."
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "support": {
+        "issues": "https://github.com/score-ya/cinderella-sdk-bundle/issues"
+    },
+    "require": {
+        "scoreya/cinderella-sdk": "~1.0",
+        "symfony/framework-bundle": "~2.3"
+    },
+    "require-dev": {
+        "matthiasnoback/symfony-config-test": "~0.4",
+        "matthiasnoback/symfony-dependency-injection-test": "~0.7"
+    }
+}
