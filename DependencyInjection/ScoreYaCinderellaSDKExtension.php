@@ -26,7 +26,7 @@ class ScoreYaCinderellaSDKExtension extends ConfigurableExtension
      */
     protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
         $container
@@ -37,14 +37,23 @@ class ScoreYaCinderellaSDKExtension extends ConfigurableExtension
 
         foreach ($mergedConfig['clients'] as $name => $config) {
             $definition = new Definition($config['class']);
-            $definition
-                ->setFactoryService(new Reference('score_ya.cinderella.sdk.client_service_builder'))
-                ->setFactoryMethod('get')
-                ->addArgument($name)
-            ;
 
-            if (isset($config['base_url'])) {
-                $definition->addMethodCall('setBaseUrl', [$config['base_url']]);
+            $factory = array(new Reference('score_ya.cinderella.sdk.client_service_builder'), 'get');
+
+            if (method_exists($definition, 'setFactory') === true) {
+                $definition->setFactory($factory);
+            }
+
+            if (method_exists($definition, 'setFactory') === false) {
+                $definition
+                    ->setFactoryService($factory[0])
+                    ->setFactoryMethod($factory[1]);
+            }
+
+            $definition->addArgument($name);
+
+            if (isset($config['base_url']) === true) {
+                $definition->addMethodCall('setBaseUrl', array($config['base_url']));
             }
 
             $container->setDefinition(sprintf($clientDefinition, $name), $definition);

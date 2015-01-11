@@ -2,6 +2,8 @@
 
 namespace ScoreYa\Cinderella\Bundle\SDKBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -41,13 +43,13 @@ class Configuration implements ConfigurationInterface
     /**
      * @param string $name
      *
-     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition
+     * @return NodeDefinition|ArrayNodeDefinition
      */
     private function addClientNode($name)
     {
-        $builder = new TreeBuilder();
-        $node    = $builder->root($name);
-        $checkIfIsOverwrittenTemplateClient = function($value) {
+        $builder                            = new TreeBuilder();
+        $node                               = $builder->root($name);
+        $checkIfIsOverwrittenTemplateClient = function ($value) {
             return $value !== 'ScoreYa\Cinderella\SDK\Template\TemplateClient';
         };
         $node
@@ -61,8 +63,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->scalarNode('base_url')->end()
-            ->end()
-        ;
+            ->end();
 
         return $node;
     }
