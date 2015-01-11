@@ -22,7 +22,7 @@ before_script:
   - composer self-update
   - if [ "$components" = "no" ]; then composer install -n; fi;
   - if [ "$components" = "high" ]; then composer update -n; fi;
-  - if [ "$components" = "low" ]; then composer install -n --prefer-lowest --prefer-stable; fi;
+  - if [ "$components" = "low" ]; then composer update -n --prefer-lowest --prefer-stable; fi;
 
 script: phpunit -v --coverage-clover=coverage.clover
 
