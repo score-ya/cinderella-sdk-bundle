@@ -20,8 +20,15 @@ class ConfigurationTest extends AbstractConfigurationTestCase
         $this->assertProcessedConfigurationEquals(
             array(array('api_key' => 'dummy_api_key')),
             array(
-                'api_key' => 'dummy_api_key',
-                'clients' => array('template' => array('class' => 'ScoreYa\Cinderella\SDK\Template\TemplateClient'))
+                'api_key'    => 'dummy_api_key',
+                'verify_ssl' => true,
+                'clients'    => array(
+                    'template' =>
+                        array(
+                            'class'    => 'ScoreYa\Cinderella\SDK\Template\TemplateClient',
+                            'base_url' => ''
+                        )
+                )
             )
         );
     }

@@ -30,6 +30,30 @@ class ScoreYaCinderellaSDKExtensionTest extends AbstractExtensionTestCase
     /**
      * @test
      */
+    public function disableSSLVerificationForClient()
+    {
+        $this->load(
+            array(
+                'api_key' => 'dummy_api_key',
+                'verify_ssl' => false,
+                'clients' => array('template' => array())
+            )
+        );
+
+        $definition = $this->container->getDefinition('score_ya.cinderella.sdk.template_client');
+
+        $this->assertCount(1, $definition->getMethodCalls());
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'score_ya.cinderella.sdk.template_client',
+            'setSslVerification',
+            array(false)
+        );
+    }
+
+    /**
+     * @test
+     */
     public function overwriteBaseUrlForSpecificClient()
     {
         $this->load(array('api_key' => 'dummy_api_key', 'clients' => array('template' => array('base_url' => 'uri'))));

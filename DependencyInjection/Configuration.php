@@ -34,7 +34,9 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->scalarNode('api_key')->cannotBeEmpty()->isRequired()->end()
-
+                ->booleanNode('verify_ssl')
+                    ->defaultTrue()
+                ->end()
             ->end();
 
         return $treeBuilder;
@@ -62,7 +64,10 @@ class Configuration implements ConfigurationInterface
                         ->thenInvalid('Class configuration for template client was overwritten with %s.')
                     ->end()
                 ->end()
-                ->scalarNode('base_url')->end()
+                ->scalarNode('base_url')
+                    ->defaultValue('')
+                ->end()
+
             ->end();
 
         return $node;

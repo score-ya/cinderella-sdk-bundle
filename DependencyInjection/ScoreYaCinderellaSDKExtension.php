@@ -41,6 +41,16 @@ class ScoreYaCinderellaSDKExtension extends ConfigurableExtension
             ->getDefinition('score_ya.cinderella.sdk.client_service_builder')
             ->replaceArgument(0, $mergedConfig['api_key']);
 
+        $this->addSDKClients($mergedConfig, $container, $hasFactoryMethod);
+    }
+
+    /**
+     * @param array            $mergedConfig
+     * @param ContainerBuilder $container
+     * @param bool             $hasFactoryMethod
+     */
+    private function addSDKClients(array $mergedConfig, ContainerBuilder $container, $hasFactoryMethod)
+    {
         $clientDefinition = 'score_ya.cinderella.sdk.%s_client';
 
         foreach ($mergedConfig['clients'] as $name => $config) {
@@ -60,8 +70,12 @@ class ScoreYaCinderellaSDKExtension extends ConfigurableExtension
 
             $definition->addArgument($name);
 
-            if (isset($config['base_url']) === true) {
+            if (strlen($config['base_url']) > 0) {
                 $definition->addMethodCall('setBaseUrl', array($config['base_url']));
+            }
+
+            if ($mergedConfig['verify_ssl'] === false) {
+                $definition->addMethodCall('setSslVerification', array($mergedConfig['verify_ssl']));
             }
 
             $container->setDefinition(sprintf($clientDefinition, $name), $definition);
